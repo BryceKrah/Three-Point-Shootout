@@ -1,3 +1,7 @@
-body{
-    
+.basketball{
+  height: 150px;
+  width: 150px;
+}
+#ball{
+  border-radius: 50%;
 }
