@@ -4,19 +4,21 @@ var $playerOneScore = $('#first-score');
 var $playerTwoScore = $('#second-score');
 var $startButton = $('#btn');
 var $ball = $('#ball');
-
-
+var startTime;
 // http://stackoverflow.com/questions/1038677/how-can-i-measure-the-time-between-click-and-release-in-javascript
 // the begin function starts counting when the mouse is clicked logging its time down in miliseconds
 // the end function then subtracts the start time from the current time giving you the time down held down in miliseconds
+
+
+
 var startTime;
 function begin(){
   startTime = new Date();
 };
 function end(){
   var now = new Date();
-  console.log(now-startTime);
-  return (now -startTime);
+  //console.log(now-startTime);
+  console.log(now -startTime);
 };
 
 
@@ -54,9 +56,14 @@ var game = {
  addEventToBall: function(){
    $($ball).mousedown(begin);
    $($ball).mouseup(end); //see above notes
+
+  //  if ( > 1000 &&  < 2000){
+  //    console.log("thats a made shot");
+  //  };
  },
 
  shoot: function(){
+
 
 
  }
