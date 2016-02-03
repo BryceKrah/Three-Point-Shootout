@@ -60,9 +60,26 @@ var game = {
        console.log("you made the shot");
        game.scoreCount++
        console.log(game.scoreCount);
+       $($ball).animate({
+         left: 500,
+         top: -10
+       }, 'slow').animate({
+         left: 550,
+         top: 160
+       }, 'slow').animate({
+         left: "30%",
+         top: "80%"
+       }, 'fast');
       // game.playerOne = game.scoreCount;
        game.updateScore();
      } else {
+       $($ball).animate({
+         left: 700,
+         top: -10
+       }, 'slow').animate({
+         left: "30%",
+         top: "80%"
+       }, 'fast');
        console.log("you missed");
      };
    };
