@@ -1,8 +1,0 @@
-$( function() {
-//  alert("jquery loaded");
-
-
-
-
-
-});

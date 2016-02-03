@@ -21,7 +21,7 @@ Make the most amount of baskets in during the 45 second turn.
 
 - A users shot should be considered either made or missed based on how long they hold down the key.
 
-- If a user holds the key down between 3 and 4 seconds it should be a make, otherwise a miss.
+- If a user holds the key down between 1 and 2 seconds it should be a make, otherwise a miss.
 
 - When a user makes a shot they will get a point.
 
