@@ -62,7 +62,7 @@ var game = {
      }, 100);
    };
    function end(){
-     $(powermeter).animate({
+     $($powermeter).animate({
        backgroundColor: "#b2000"
      }, 100);
      var now = new Date();
@@ -73,13 +73,13 @@ var game = {
        game.scoreCount++
        console.log(game.scoreCount);
        $($ball).animate({
-         left: "40%",
+         left: "45%",
          top: "10%"
        }, 'slow').animate({
-         left: 550,
-         top: 160,
+         left: "53%",
+         top: "37%",
          opacity: 0
-       }, 'slow').animate({
+       }, 500 ).animate({
          left: "30%",
          top: "80%"
        }, 'fast').animate({
@@ -87,10 +87,10 @@ var game = {
        }, 'fast');
       // game.playerOne = game.scoreCount;
        game.updateScore();
-     } else {
+     } else if (downTime < 1000){
        $($ball).animate({
-         left: 700,
-         top: -10,
+         left: "60%",
+         top: "",
          opacity: 0
        }, 'slow').animate({
          left: "30%",
@@ -98,6 +98,16 @@ var game = {
          opacity: 1
        }, 'fast');
        console.log("you missed");
+     } else if (downTime > 2000) {
+       $($ball).animate({
+         left: "35%",
+         top: "10%",
+         opacity: 0
+      }, 'fast').animate({
+        left: "30%",
+        top: "80%",
+        opacity: 1
+      }, 'fast');
      };
    };
    $($ball).mousedown(begin);
@@ -111,12 +121,24 @@ var game = {
    if (game.whosTurn === game.playerTwo) {
      if(game.firstScore > game.secondScore){
        $('#winner').text(game.playerOne + " You Won!")
+       $($container).append('<button id="playagain">Play Again</button>');
+       $('#playagain').on('click', function(){
+         location.reload();
+       });
        return;
      } else if (game.firstScore < game.secondScore) {
        $('#winner').text(game.playerTwo + " You Won!");
+       $($container).append('<button id="playagain">Play Again</button>');
+       $('#playagain').on('click', function(){
+         location.reload();
+       });
        return;
      } else if (game.firstScore === game.secondScore) {
        $('#winner').text("It was a tie!");
+       $($container).append('<button id="playagain">Play Again</button>');
+       $('#playagain').on('click', function(){
+         location.reload();
+       });
        return;
      };
    } else {

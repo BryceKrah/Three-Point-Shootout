@@ -9,6 +9,16 @@ body{
   font-family: 'Exo', sans-serif;
 }
 
+#playagain{
+  font-size: 40px;
+  color: green;
+  background-color: white;
+  border-radius: 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
 #container{
   background-image: url('https://img1.etsystatic.com/040/0/5346760/il_fullxfull.615079111_rm1s.jpg');
   height: 800px;
