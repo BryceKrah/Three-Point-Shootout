@@ -10,13 +10,13 @@ body{
 }
 
 #playagain{
-  font-size: 40px;
+  font-size: 50px;
   color: green;
   background-color: white;
-  border-radius: 40px;
+  border-radius: 35px;
   position: absolute;
-  left: 50%;
-  top: 75%;
+  left: 1%;
+  top: 3%;
 }
 
 #container{
@@ -35,6 +35,8 @@ body{
   font-size: 60px;
   font-weight: bold;
   color: red;
+  position: absolute;
+  left: 29%;
 }
 
 #next {
@@ -47,15 +49,19 @@ body{
 #timer {
   font-size: 40px;
   font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 5px;
 
 }
 
 #first-score{
   font-size: 30px;
+
 }
 
 #second-score{
   font-size: 30px;
+
 }
 
 #turn{
@@ -87,18 +93,28 @@ body{
   }
 }
 
+#makeormiss{
+    font-size: 40px;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    display: inline;
+    color: white;
+}
+
 #powermeter{
   font-size: 30px;
   border-radius: 20px;
   border: 2px solid white;
   display: inline-block;
   position: absolute;
-  top: 82%;
-  left: 10%;
+  bottom: 0%;
+  left: 0%;
 }
 
 
 .basketball{
   height: 110px;
   width: 110px;
+  transform: rotate(180deg);
 }

@@ -1,5 +1,5 @@
 var $timerId = $('#timer');
-var seconds = 15;
+var seconds = 35;
 var $playerOneScore = $('#first-score');
 var $playerTwoScore = $('#second-score');
 var $startButton = $('#btn');
@@ -7,6 +7,9 @@ var $ball = $('#ball');
 var $turnBox = $('#turn');
 var $container = $('#container');
 var $powermeter = $('#powermeter');
+var oldSrc = 'http://icons.iconseeker.com/png/fullsize/nx10/basketball.png';
+var newSrc = 'http://www.primetimeshootout.net/images/ball.png';
+var $makeormiss = $('#makeormiss');
 
 // http://stackoverflow.com/questions/1038677/how-can-i-measure-the-time-between-click-and-release-in-javascript
 // the begin function starts counting when the mouse is clicked logging its time down in miliseconds
@@ -23,7 +26,10 @@ var game = {
 
 
   start: function(){
-    $($powermeter).text("Swish-O-Meter");
+    $($powermeter).text("Swish-O-Meter").animate({
+      left: "10%",
+      bottom: "10%"
+    }, 'slow');
     $($playerOneScore).text("Player One Score: " + game.scoreCount);
     $($playerTwoScore).text("Player Two Score: " + game.scoreCount);
     $($ball).append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
@@ -54,7 +60,7 @@ var game = {
    var startTime;
    function begin(){
      startTime = new Date();
-     game.shotsTaken++
+    game.shotsTaken++
      $($powermeter).animate({
        backgroundColor: "#b2000"
      }, 100 ).animate({
@@ -62,10 +68,14 @@ var game = {
      }, 1900).animate({
        backgroundColor: "#b2000"
      }, 100);
+
+      $('img[src="' + newSrc + '"]').attr('src', oldSrc);
+      if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
+      $('img[src="' + oldSrc + '"]').attr('src', newSrc);
+    };
    };
+
    function end(){
-
-
      $($powermeter).animate({
        backgroundColor: "#b2000"
      }, 100);
@@ -73,7 +83,12 @@ var game = {
      //console.log(now-startTime);
      var downTime = (now -startTime);
      if (downTime > 1000 && downTime < 2000){
-       console.log("you made the shot");
+       if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
+       $('img[src="' + oldSrc + '"]').attr('src', newSrc);
+       game.scoreCount++
+       $($makeormiss).text("KOBE!");
+     }
+       $($makeormiss).text("SWISH!");
        game.scoreCount++
        console.log(game.scoreCount);
        $($ball).animate({
@@ -101,7 +116,7 @@ var game = {
          top: "80%",
          opacity: 1
        }, 'fast');
-       console.log("you missed");
+       $($makeormiss).text("BRICK!");
      } else if (downTime > 2000) {
        $($ball).animate({
          left: "35%",
@@ -112,14 +127,17 @@ var game = {
         top: "80%",
         opacity: 1
       }, 'fast');
+      $($makeormiss).text("AIRBALL!");
      };
    };
    $($ball).mousedown(begin);
    $($ball).mouseup(end) //see above notes
-
  },
 
  endTurn: function(){
+   $($timerId).animate({
+     color: '#ffffff'
+   }, 500);
    $($ball).off();
    $($turnBox).text("Nice Shooting! You got " + game.scoreCount + " points");
    if (game.whosTurn === game.playerTwo) {
@@ -152,7 +170,8 @@ var game = {
  },
 
  startNextRound: function(){
-   var seconds = 15;
+   var seconds = 35;
+   game.shotsTaken = 0;
    game.scoreCount = 0;
    $($timerId).text("Shot Clock: " + seconds);
    $($turnBox).text("Player Two, You're Up! Click the Ball to start shooting!");
@@ -166,14 +185,20 @@ var game = {
 
 
  startTheTimer: function(){
-   seconds = 15;
+   seconds = 35;
    $($ball).off('click');
    $($turnBox).text('');
    var mytimer = setInterval(updateTime, 1000);
    function updateTime(){
      seconds--;
      $($timerId).text("Shot Clock: " + seconds);
-     if(seconds === 0) {
+     if(seconds < 11){
+       $($timerId).animate({
+         color: "#b3000",
+       }, 200);
+       $($timerId).fadeOut(500);
+       $($timerId).fadeIn(500);
+     }; if(seconds === 0) {
        clearInterval(mytimer);
        game.endTurn();
      }; // end if clearInterval
