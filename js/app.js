@@ -6,6 +6,7 @@ var $startButton = $('#btn');
 var $ball = $('#ball');
 var $turnBox = $('#turn');
 var $container = $('#container');
+var $powermeter = $('#powermeter');
 
 // http://stackoverflow.com/questions/1038677/how-can-i-measure-the-time-between-click-and-release-in-javascript
 // the begin function starts counting when the mouse is clicked logging its time down in miliseconds
@@ -21,6 +22,7 @@ var game = {
 
 
   start: function(){
+    $($powermeter).text("Power Meter");
     $($playerOneScore).text("Player One Score: " + game.scoreCount);
     $($playerTwoScore).text("Player Two Score: " + game.scoreCount);
     $($ball).append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
@@ -51,8 +53,18 @@ var game = {
    var startTime;
    function begin(){
      startTime = new Date();
+     $($powermeter).animate({
+       backgroundColor: "#b2000"
+     }, 100 ).animate({
+       backgroundColor: "#00cc00"
+     }, 1900).animate({
+       backgroundColor: "#b2000"
+     }, 100);
    };
    function end(){
+     $(powermeter).animate({
+       backgroundColor: "#b2000"
+     }, 100);
      var now = new Date();
      //console.log(now-startTime);
      var downTime = (now -startTime);
@@ -61,24 +73,29 @@ var game = {
        game.scoreCount++
        console.log(game.scoreCount);
        $($ball).animate({
-         left: 500,
-         top: -10
+         left: "40%",
+         top: "10%"
        }, 'slow').animate({
          left: 550,
-         top: 160
+         top: 160,
+         opacity: 0
        }, 'slow').animate({
          left: "30%",
          top: "80%"
+       }, 'fast').animate({
+         opacity: 1,
        }, 'fast');
       // game.playerOne = game.scoreCount;
        game.updateScore();
      } else {
        $($ball).animate({
          left: 700,
-         top: -10
+         top: -10,
+         opacity: 0
        }, 'slow').animate({
          left: "30%",
-         top: "80%"
+         top: "80%",
+         opacity: 1
        }, 'fast');
        console.log("you missed");
      };

@@ -69,6 +69,16 @@ body{
   }
 }
 
+#powermeter{
+  font-size: 30px;
+  border-radius: 20px;
+  border: 2px solid white;
+  display: inline-block;
+  position: absolute;
+  top: 82%;
+  left: 10%;
+}
+
 
 .basketball{
   height: 110px;
