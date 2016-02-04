@@ -16,7 +16,7 @@ body{
   border-radius: 40px;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 75%;
 }
 
 #container{
@@ -38,8 +38,10 @@ body{
 }
 
 #next {
-  font-size: 25px;
+  font-size: 40px;
   border-radius: 40px;
+  padding: 10px;
+  font-weight: bold;
 }
 
 #timer {
@@ -58,6 +60,12 @@ body{
 
 #turn{
   font-size: 40px;
+  display: inline;
+  position: absolute;
+  top: 45%;
+  left: 20%;
+  right: 30%;
+  text-align: center;
 }
 
 #ball{

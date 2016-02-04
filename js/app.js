@@ -19,10 +19,11 @@ var game = {
   whosTurn: '',
   firstScore: 0,
   secondScore: 0,
+  shotsTaken: 0,
 
 
   start: function(){
-    $($powermeter).text("Power Meter");
+    $($powermeter).text("Swish-O-Meter");
     $($playerOneScore).text("Player One Score: " + game.scoreCount);
     $($playerTwoScore).text("Player Two Score: " + game.scoreCount);
     $($ball).append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
@@ -53,6 +54,7 @@ var game = {
    var startTime;
    function begin(){
      startTime = new Date();
+     game.shotsTaken++
      $($powermeter).animate({
        backgroundColor: "#b2000"
      }, 100 ).animate({
@@ -62,6 +64,8 @@ var game = {
      }, 100);
    };
    function end(){
+
+
      $($powermeter).animate({
        backgroundColor: "#b2000"
      }, 100);
