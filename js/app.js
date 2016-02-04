@@ -30,8 +30,22 @@ var game = {
       left: "10%",
       bottom: "10%"
     }, 'slow');
-    $($playerOneScore).text("Player One Score: " + game.scoreCount);
-    $($playerTwoScore).text("Player Two Score: " + game.scoreCount);
+    $('#container').append('<input id="one" type="text" placeholder="Player One Enter Name Here" value="">');
+    $('#container').append('<input id="two" type="text" placeholder="Player Two Enter Name Here" value="">');
+
+    $('#one').keyup(function() {
+      var firstName = $(this).val();
+      $($playerOneScore).text(firstName +": "+ game.scoreCount);
+    })
+    $('#two').keyup(function() {
+      var secondName = $(this).val();
+      $($playerTwoScore).text(secondName +": "+ game.scoreCount);
+    })
+    .keyup();
+
+
+    //$($playerOneScore).text("Player One Score: " + game.scoreCount);
+    //$($playerTwoScore).text("Player Two Score: " + game.scoreCount);
     $($ball).append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
     $($timerId).text("Shot Clock: " + seconds);
     $($turnBox).text("Player One, You're Up! Click the Ball to start shooting!");
@@ -69,9 +83,9 @@ var game = {
        backgroundColor: "#b2000"
      }, 100);
 
-      $('img[src="' + newSrc + '"]').attr('src', oldSrc);
+      $('img[src="' + newSrc + '"]').attr('src', oldSrc); // stack overflow
       if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
-      $('img[src="' + oldSrc + '"]').attr('src', newSrc);
+      $('img[src="' + oldSrc + '"]').attr('src', newSrc); // stack overflow
     };
    };
 
@@ -108,8 +122,8 @@ var game = {
        game.updateScore();
      } else if (downTime < 1000){
        $($ball).animate({
-         left: "60%",
-         top: "",
+         left: "70%",
+         top: "30%",
          opacity: 0
        }, 'slow').animate({
          left: "30%",
@@ -170,6 +184,8 @@ var game = {
  },
 
  startNextRound: function(){
+   $('#next').hide();
+
    var seconds = 35;
    game.shotsTaken = 0;
    game.scoreCount = 0;
@@ -185,6 +201,9 @@ var game = {
 
 
  startTheTimer: function(){
+   $('#one').hide();
+   $('#two').hide();
+
    seconds = 35;
    $($ball).off('click');
    $($turnBox).text('');
