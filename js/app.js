@@ -26,6 +26,7 @@ var game = {
 
 
   start: function(){
+    $($startButton).hide();
     $($powermeter).text("Swish-O-Meter").animate({
       left: "10%",
       bottom: "10%"
@@ -69,9 +70,9 @@ var game = {
        backgroundColor: "#b2000"
      }, 100);
 
-      $('img[src="' + newSrc + '"]').attr('src', oldSrc);
+      $('img[src="' + newSrc + '"]').attr('src', oldSrc); // stack overflow
       if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
-      $('img[src="' + oldSrc + '"]').attr('src', newSrc);
+      $('img[src="' + oldSrc + '"]').attr('src', newSrc); // stack overflow
     };
    };
 
@@ -108,8 +109,8 @@ var game = {
        game.updateScore();
      } else if (downTime < 1000){
        $($ball).animate({
-         left: "60%",
-         top: "",
+         left: "70%",
+         top: "30%",
          opacity: 0
        }, 'slow').animate({
          left: "30%",
@@ -170,6 +171,7 @@ var game = {
  },
 
  startNextRound: function(){
+   $('#next').hide();
    var seconds = 35;
    game.shotsTaken = 0;
    game.scoreCount = 0;
