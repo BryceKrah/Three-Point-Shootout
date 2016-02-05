@@ -5,6 +5,7 @@
 }
 
 body{
+  -webkit-touch-callout: none !important;
   background-color: lightgray;
   font-family: 'Exo', sans-serif;
 }
@@ -36,6 +37,27 @@ body{
   color: red;
   position: absolute;
   left: 29%;
+}
+
+#rookie{
+  font-size: 30px;
+  border-radius: 30px;
+  padding: 10px;
+  color: blue;
+}
+#pro{
+  font-size: 30px;
+  border-radius: 30px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  color: blue;
+}
+#allstar{
+  font-size: 30px;
+  border-radius: 30px;
+  padding: 10px;
+  color: blue;
 }
 
 #next {
@@ -74,6 +96,7 @@ body{
 }
 
 #ball{
+  -webkit-user-select: none !important;
   display: inline-block;
   position: absolute;
   top: 80%;
