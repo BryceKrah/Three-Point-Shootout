@@ -34,9 +34,10 @@ body{
 #winner {
   font-size: 60px;
   font-weight: bold;
-  color: red;
+  color: yellow;
   position: absolute;
   left: 29%;
+  top: 0%;
 }
 
 #rookie{
