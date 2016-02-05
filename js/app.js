@@ -57,6 +57,61 @@ var game = {
   };
  },
 
+
+makeShot: function(){
+  if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
+  $('img[src="' + oldSrc + '"]').attr('src', newSrc);
+  game.scoreCount+=2;
+  $($makeormiss).text("You're On Fire!");
+} else {
+  $($makeormiss).text("SWISH!");
+  game.scoreCount++
+  console.log(game.scoreCount);
+};
+  game.updateScore();
+},
+
+missShotLong: function() {
+  $($ball).animate({
+    left: "35%",
+    top: "10%",
+    opacity: 0
+ }, 'fast').animate({
+   left: "30%",
+   top: "80%",
+   opacity: 1
+ }, 'fast');
+ $($makeormiss).text("AIRBALL!");
+},
+
+missShotShort: function(){
+  $($ball).animate({
+    left: "70%",
+    top: "30%",
+    opacity: 0
+  }, 'slow').animate({
+    left: "30%",
+    top: "80%",
+    opacity: 1
+  }, 'fast');
+  $($makeormiss).text("BRICK!");
+},
+
+animateMadeShot: function(){
+  $($ball).animate({ left: "45%", top: "10%" }, 'slow').animate({
+                     left: "53%", top: "37%", opacity: 0 }, 500 ).animate({
+                     left: "30%", top: "80%" }, 'fast').animate({ opacity: 1, }, 'fast');
+},
+
+animateMissShort: function(){
+
+},
+
+animateMissLong: function(){
+
+},
+
+
  addEventToBall: function(){
    var startTime;
    function begin(){
@@ -76,63 +131,27 @@ var game = {
     };
    };
 
-   function end(){
-     $($powermeter).animate({
-       backgroundColor: "#b2000"
-     }, 100);
-     var now = new Date();
-     //console.log(now-startTime);
-     var downTime = (now -startTime);
-     if (downTime > 1000 && downTime < 2000){
-       if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
-       $('img[src="' + oldSrc + '"]').attr('src', newSrc);
-       game.scoreCount++
-       $($makeormiss).text("KOBE!");
-     }
-       $($makeormiss).text("SWISH!");
-       game.scoreCount++
-       console.log(game.scoreCount);
-       $($ball).animate({
-         left: "45%",
-         top: "10%"
-       }, 'slow').animate({
-         left: "53%",
-         top: "37%",
-         opacity: 0
-       }, 500 ).animate({
-         left: "30%",
-         top: "80%"
-       }, 'fast').animate({
-         opacity: 1,
-       }, 'fast');
-      // game.playerOne = game.scoreCount;
-       game.updateScore();
-     } else if (downTime < 1000){
-       $($ball).animate({
-         left: "70%",
-         top: "30%",
-         opacity: 0
-       }, 'slow').animate({
-         left: "30%",
-         top: "80%",
-         opacity: 1
-       }, 'fast');
-       $($makeormiss).text("BRICK!");
-     } else if (downTime > 2000) {
-       $($ball).animate({
-         left: "35%",
-         top: "10%",
-         opacity: 0
-      }, 'fast').animate({
-        left: "30%",
-        top: "80%",
-        opacity: 1
-      }, 'fast');
-      $($makeormiss).text("AIRBALL!");
-     };
-   };
-   $($ball).mousedown(begin);
-   $($ball).mouseup(end) //see above notes
+    function end(){
+         $($powermeter).animate({
+           backgroundColor: "#b2000"
+         }, 100);
+         var now = new Date();
+         //console.log(now-startTime);
+         var downTime = (now -startTime);
+         if (downTime > 1000 && downTime < 2000){
+           game.makeShot();
+           game.animateMadeShot();
+
+         } else if (downTime < 1000){
+           game.missShotShort();
+
+         } else if (downTime > 2000) {
+           game.missShotLong();
+
+         };
+       };
+       $($ball).mousedown(begin);
+       $($ball).mouseup(end) //see above notes
  },
 
  endTurn: function(){
