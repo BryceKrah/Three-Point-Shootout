@@ -10,6 +10,8 @@ var $powermeter = $('#powermeter');
 var oldSrc = 'http://icons.iconseeker.com/png/fullsize/nx10/basketball.png';
 var newSrc = 'http://www.primetimeshootout.net/images/ball.png';
 var $makeormiss = $('#makeormiss');
+var $canvasmeter = $('#meter').get(0);
+
 
 // http://stackoverflow.com/questions/1038677/how-can-i-measure-the-time-between-click-and-release-in-javascript
 // the begin function starts counting when the mouse is clicked logging its time down in miliseconds
@@ -38,8 +40,6 @@ randNum: function(){
     return Math.floor(Math.random() * (1100 - 10 + 1)) + 10;
 },
 
-
-
 start: function(){
     $($container).append('<button class="diff" id="rookie">Rookie</button>');
     $($container).append('<button class="diff" id="pro">Pro</button>');
@@ -54,7 +54,8 @@ start: function(){
    $('.diff').hide();
    game.difficulty = $(this).text();
    $($startButton).hide();
-   $($powermeter).text("Swish-O-Meter").animate({ left: "10%", bottom: "18%" }, 'slow');
+   $($powermeter).text("").animate({ left: "10%", bottom: "18%" }, 'slow');
+   $($powermeter).append('<div id="innerbox">SHOOT! </div>');
    $($playerOneScore).text("Player One Score: " + game.scoreCount);
    $($playerTwoScore).text("Player Two Score: " + game.scoreCount);
    $($ball).append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
@@ -118,9 +119,14 @@ animateMissLong: function(){
 },
 
 animatePowerMeter: function(){
-  $($powermeter).animate({ backgroundColor: "#b2000" }, 100 ).animate({
-                           backgroundColor: "#00cc00" }, 1900).animate({
-                           backgroundColor: "#b2000" }, 100);
+  // $($powermeter).animate({ backgroundColor: "#b2000" }, 100 ).animate({
+  //                          backgroundColor: "#00cc00" }, 1900).animate({
+  //                          backgroundColor: "#b2000" }, 100);
+
+  $('#innerbox').animate({
+    width: "100%",
+    backgroundColor: "#00cc00",
+  }, 2100);
 },
 
 animateWinner: function(){
@@ -143,6 +149,13 @@ animateWinner: function(){
        }; // end begin function
 
        function end(){
+
+         $('#innerbox').stop();
+         $('#innerbox').animate({
+           width: "0%",
+           backgroundColor: "ffffff"
+         }, 100);
+
           var now = new Date();
           var downTime = (now -startTime);
           game.randNum();

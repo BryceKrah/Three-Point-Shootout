@@ -131,8 +131,28 @@ body{
   border: 2px solid white;
   display: inline-block;
   position: absolute;
+  height: 36px;
+  width: 160px;
   bottom: 0%;
   left: 0%;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+  /*background-image: url('http://science2.fartoomuch.info/colorbar3.png');*/
+}
+
+#innerbox{
+  /*position: relative;*/
+  height: 100%;
+  overflow: auto;
+  margin: 0px;
+  padding: 5px;
+  width: 0px;
+  /*border-radius: 20px;*/
+  background-color: white;
+  color: black;
+  text-align: left;
+
 }
 
 
