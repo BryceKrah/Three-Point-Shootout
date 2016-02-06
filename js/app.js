@@ -10,12 +10,11 @@ var $powermeter = $('#powermeter');
 var oldSrc = 'http://icons.iconseeker.com/png/fullsize/nx10/basketball.png';
 var newSrc = 'http://www.primetimeshootout.net/images/ball.png';
 var $makeormiss = $('#makeormiss');
+var $bigbox = $('.bigbox');
 
 // http://stackoverflow.com/questions/1038677/how-can-i-measure-the-time-between-click-and-release-in-javascript
 // the begin function starts counting when the mouse is clicked logging its time down in miliseconds
 // the end function then subtracts the start time from the current time giving you the time down held down in miliseconds
-
-
 
 
 
@@ -39,19 +38,31 @@ randNum: function(){
 },
 
 start: function(){
-    $($container).append('<button class="diff" id="rookie">Rookie</button>');
-    $($container).append('<button class="diff" id="pro">Pro</button>');
-    $($container).append('<button class="diff" id="allstar">All-Star</button>');
+    $('p').hide();
+    $($startButton).hide();
+    $($bigbox).append('<button class="diff" id="rookie">Rookie</button>');
+    $($bigbox).append('<button class="diff" id="pro">Pro</button>');
+    $($bigbox).append('<button class="diff" id="allstar">All-Star</button>');
+    $($bigbox).append('<button id="manual">How To Play</button>')
     $('.diff').on('click', game.diffLevel);
+    $('#manual').on('click', game.showDirections);
 // make difficulty not string .. number
  }, // end start
 
+
+showDirections: function(){
+  $('p').show();
+  $('.diff').hide();
+  $('#manual').hide();
+  $('p').on('click', game.start);
+
+},
 
 
  diffLevel: function(){
    $('.diff').hide();
    game.difficulty = $(this).text();
-   $($startButton).hide();
+   $($bigbox).hide();
    $($powermeter).text("").animate({ left: "10%", bottom: "18%" }, 'slow').animate({
      height: 36, width: 160}, 'fast');
    $($powermeter).append('<div id="innerbox"> Shoot !</div>');
@@ -290,7 +301,7 @@ animateWinner: function(){
 $( function() {
 //  alert("jquery loaded");
 
-
+$('p').hide();
 $($startButton).on('click', game.start);
 $($ball).on('click', game.startTheTimer);
 

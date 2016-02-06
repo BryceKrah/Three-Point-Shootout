@@ -4,10 +4,29 @@
     color: white;
 }
 
+p{
+  color: black;
+  text-align: center;
+  font-size: 19px;
+  font-weight: bold;
+}
+
 body{
   -webkit-touch-callout: none !important;
   background-color: lightgray;
   font-family: 'Exo', sans-serif;
+}
+
+.bigbox{
+  height: 375px;
+  width: 800px;
+  border: 2px solid white;
+  position: relative;
+  left: 15%;
+  top: 10%;
+  background-color: lightgray;
+  opacity: .8;
+  z-index: 0;
 }
 
 #playagain{
@@ -27,8 +46,15 @@ body{
 }
 
 #btn {
-  font-size: 35px;
+  font-size: 45px;
+  color: white;
   border-radius: 40px;
+  background-color: forestgreen;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 18%;
+  border: 4px solid forestgreen;
 }
 
 #winner {
@@ -44,21 +70,46 @@ body{
   font-size: 30px;
   border-radius: 30px;
   padding: 10px;
-  color: blue;
+  background-color: black;
+  margin-left: 20%;
+  margin-right: 4%;
+  margin-top: 18%;
+  border: 3px solid black;
 }
 #pro{
   font-size: 30px;
   border-radius: 30px;
   padding: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  color: blue;
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: blue;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 18%;
+  border: 3px solid blue;
+
 }
 #allstar{
   font-size: 30px;
   border-radius: 30px;
   padding: 10px;
-  color: blue;
+  background-color: red;
+  margin-left: 4%;
+  margin-right: 18%;
+  margin-top: 18%;
+  border: 3px solid red;
+}
+
+#manual{
+  font-size: 30px;
+  border-radius: 30px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: orange;
+  margin-left: 36%;
+  margin-top: 4%;
+  border: 3px solid orange;
 }
 
 #next {
@@ -66,6 +117,8 @@ body{
   border-radius: 40px;
   padding: 10px;
   font-weight: bold;
+  background-color: forestgreen;
+  border: 3px solid forestgreen;
 }
 
 #timer {
@@ -91,8 +144,8 @@ body{
   display: inline;
   position: absolute;
   top: 45%;
-  left: 20%;
-  right: 30%;
+  left: 30%;
+  right: 10%;
   text-align: center;
 }
 
