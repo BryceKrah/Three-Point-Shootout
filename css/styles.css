@@ -126,31 +126,32 @@ body{
 }
 
 #powermeter{
-  font-size: 30px;
-  border-radius: 20px;
+  font-size: 23px;
+  font-weight: bold;
+  border-radius: 10px;
   border: 2px solid white;
   display: inline-block;
   position: absolute;
-  height: 36px;
-  width: 160px;
+  height: 0px;
+  width: 0px;
   bottom: 0%;
   left: 0%;
   overflow: hidden;
   padding: 0px;
   margin: 0px;
-  /*background-image: url('http://science2.fartoomuch.info/colorbar3.png');*/
+  background-color: red;
 }
 
 #innerbox{
-  /*position: relative;*/
   height: 100%;
   overflow: auto;
   margin: 0px;
-  padding: 5px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
   width: 0px;
-  /*border-radius: 20px;*/
-  background-color: white;
-  color: black;
+  background-position: right;
+  color: white;
   text-align: left;
 
 }

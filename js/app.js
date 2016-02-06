@@ -54,8 +54,9 @@ start: function(){
    $('.diff').hide();
    game.difficulty = $(this).text();
    $($startButton).hide();
-   $($powermeter).text("").animate({ left: "10%", bottom: "18%" }, 'slow');
-   $($powermeter).append('<div id="innerbox">SHOOT! </div>');
+   $($powermeter).text("").animate({ left: "10%", bottom: "18%" }, 'slow').animate({
+     height: 36, width: 160}, 'fast');
+   $($powermeter).append('<div id="innerbox"> Shoot !</div>');
    $($playerOneScore).text("Player One Score: " + game.scoreCount);
    $($playerTwoScore).text("Player Two Score: " + game.scoreCount);
    $($ball).append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
@@ -95,11 +96,11 @@ makeShot: function(){
 },
 
 missShotLong: function() {
- $($makeormiss).text("AIRBALL!");
+ $($makeormiss).text("Late Release!");
 },
 
 missShotShort: function(){
-  $($makeormiss).text("BRICK!");
+  $($makeormiss).text("Early Release!");
 },
 
 animateMake: function(){
@@ -119,14 +120,23 @@ animateMissLong: function(){
 },
 
 animatePowerMeter: function(){
-  // $($powermeter).animate({ backgroundColor: "#b2000" }, 100 ).animate({
-  //                          backgroundColor: "#00cc00" }, 1900).animate({
-  //                          backgroundColor: "#b2000" }, 100);
-
-  $('#innerbox').animate({
-    width: "100%",
-    backgroundColor: "#00cc00",
-  }, 2100);
+    switch (game.difficulty) {
+      case "Rookie":
+        $('#innerbox').animate({ width: "100%", backgroundColor: "#00cc00"}, 1700).animate({
+                                 backgroundColor: "#b3000"}, 200);
+        break;
+      case "Pro":
+        $('#innerbox').animate({ width: "100%", backgroundColor: "#00cc00"}, 1500).animate({
+                                 backgroundColor: "#b9000"}, 200);
+        break;
+      case "All-Star":
+        $('#innerbox').animate({ width: "100%", backgroundColor: "#00cc00"}, 1500).animate({
+                                 backgroundColor: "#c2000"}, 200);
+        break;
+      default:
+        $('#innerbox').animate({ width: "100%", backgroundColor: "#00cc00"}, 1700).animate({
+                               backgroundColor: "#b3000"}, 200);
+    };
 },
 
 animateWinner: function(){
@@ -159,42 +169,44 @@ animateWinner: function(){
           var now = new Date();
           var downTime = (now -startTime);
           game.randNum();
-          if (game.difficulty === 'Rookie'){ // make switch case
-              if (downTime > 1000 && downTime < 2000){
-                 game.makeShot();
-                 game.animateMake();
-               } else if (downTime < 1000){
-                 game.missShotShort();
-                 game.animateMissShort();
-               } else if (downTime > 2000) {
-                 game.missShotLong();
-                 game.animateMissLong();
-               };
-          } // end if rookie
-          else if (game.difficulty === 'Pro') {
-              if (downTime > 1200 && downTime < 1800){
-                 game.makeShot();
-                 game.animateMake();
-               } else if (downTime < 1200){
-                 game.missShotShort();
-                 game.animateMissShort();
-               } else if (downTime > 1800) {
-                 game.missShotLong();
-                 game.animateMissLong();
-               };
-          } // end else if Pro
-          else if (game.difficulty === 'All-Star') {
-              if (downTime > 1400 && downTime < 1600){
-                 game.makeShot();
-                 game.animateMake();
-               } else if (downTime < 1400){
-                 game.missShotShort();
-                 game.animateMissShort();
-               } else if (downTime > 1600) {
-                 game.missShotLong();
-                 game.animateMissLong();
-               };
-          }; //end else if All-star
+          switch (game.difficulty) { // make switch case
+                case 'Rookie':
+                  if (downTime > 1000 && downTime < 2000){
+                     game.makeShot();
+                     game.animateMake();
+                   } else if (downTime < 1000){
+                     game.missShotShort();
+                     game.animateMissShort();
+                   } else if (downTime > 2000) {
+                     game.missShotLong();
+                     game.animateMissLong();
+                   };
+                   break;
+               case 'Pro':
+                  if (downTime > 1200 && downTime < 1800){
+                     game.makeShot();
+                     game.animateMake();
+                   } else if (downTime < 1200){
+                     game.missShotShort();
+                     game.animateMissShort();
+                   } else if (downTime > 1800) {
+                     game.missShotLong();
+                     game.animateMissLong();
+                   };
+                   break;
+               case 'All-Star':
+                  if (downTime > 1400 && downTime < 1600){
+                     game.makeShot();
+                     game.animateMake();
+                   } else if (downTime < 1400){
+                     game.missShotShort();
+                     game.animateMissShort();
+                   } else if (downTime > 1600) {
+                     game.missShotLong();
+                     game.animateMissLong();
+                   };
+                  break;
+          }; //end switch difficulty
          }; // end end function
     $($ball).mousedown(begin);
     $($ball).mouseup(end) //see above notes
@@ -215,6 +227,7 @@ animateWinner: function(){
            return;
          } else if (game.firstScore < game.secondScore) {
            $('#winner').text(game.playerTwo + " You Won!");
+           game.animateWinner();
            $($container).append('<button id="playagain">Play Again</button>');
            $('#playagain').on('click', function(){
              location.reload();
@@ -222,6 +235,7 @@ animateWinner: function(){
            return;
          } else if (game.firstScore === game.secondScore) {
            $('#winner').text("It was a tie!");
+           game.animateWinner();
            $($container).append('<button id="playagain">Play Again</button>');
            $('#playagain').on('click', function(){
              location.reload();
@@ -256,17 +270,18 @@ animateWinner: function(){
    $($ball).off('click');
    $($turnBox).text('');
    var mytimer = setInterval(updateTime, 1000);
+
    function updateTime(){
-     seconds--;
-     $($timerId).text("Shot Clock: " + seconds);
-     if(seconds < 11){
-       $($timerId).animate({ color: "#b3000", }, 200);
-       $($timerId).fadeOut(500);
-       $($timerId).fadeIn(500);
-     }; if(seconds === 0) {
-       clearInterval(mytimer);
-       game.endTurn();
-     }; // end if clearInterval
+       seconds--;
+       $($timerId).text("Shot Clock: " + seconds);
+       if(seconds < 11){
+         $($timerId).animate({ color: "#b3000", }, 200);
+         $($timerId).fadeOut(500);
+         $($timerId).fadeIn(500);
+       }; if(seconds === 0) {
+         clearInterval(mytimer);
+         game.endTurn();
+       }; // end if clearInterval
    }; // end updateTime
    game.addEventToBall();
  },
