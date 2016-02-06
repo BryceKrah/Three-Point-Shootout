@@ -10,8 +10,6 @@ var $powermeter = $('#powermeter');
 var oldSrc = 'http://icons.iconseeker.com/png/fullsize/nx10/basketball.png';
 var newSrc = 'http://www.primetimeshootout.net/images/ball.png';
 var $makeormiss = $('#makeormiss');
-var $canvasmeter = $('#meter').get(0);
-
 
 // http://stackoverflow.com/questions/1038677/how-can-i-measure-the-time-between-click-and-release-in-javascript
 // the begin function starts counting when the mouse is clicked logging its time down in miliseconds
