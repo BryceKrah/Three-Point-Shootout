@@ -17,8 +17,6 @@ var $bigbox = $('.bigbox');
 // the end function then subtracts the start time from the current time giving you the time down held down in miliseconds
 
 
-
-
 var game = {
   playerOne: 'Player One',
   playerTwo: 'Player Two',
@@ -38,7 +36,7 @@ randNum: function(){
 },
 
 start: function(){
-    $('p').hide(); 
+    $('p').hide();
     $($startButton).hide();
     $($bigbox).append('<button class="diff" id="rookie">Rookie</button>');
     $($bigbox).append('<button class="diff" id="pro">Pro</button>');
