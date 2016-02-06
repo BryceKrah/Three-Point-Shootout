@@ -15,6 +15,11 @@ var $makeormiss = $('#makeormiss');
 // the begin function starts counting when the mouse is clicked logging its time down in miliseconds
 // the end function then subtracts the start time from the current time giving you the time down held down in miliseconds
 
+
+
+
+
+
 var game = {
   playerOne: 'Player One',
   playerTwo: 'Player Two',
@@ -23,27 +28,44 @@ var game = {
   firstScore: 0,
   secondScore: 0,
   shotsTaken: 0,
+  difficulty: '',
 
 
-  start: function(){
-    $($startButton).hide();
-    $($powermeter).text("Swish-O-Meter").animate({
-      left: "10%",
-      bottom: "10%"
-    }, 'slow');
-    $($playerOneScore).text("Player One Score: " + game.scoreCount);
-    $($playerTwoScore).text("Player Two Score: " + game.scoreCount);
-    $($ball).append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
-    $($timerId).text("Shot Clock: " + seconds);
-    $($turnBox).text("Player One, You're Up! Click the Ball to start shooting!");
-    if (game.whosTurn === '') {
-      game.whosTurn = game.playerOne;
-    } else if (game.whosTurn === game.playerOne) {
-      game.whosTurn = game.playerTwo;
-    };
+  //move hoop in background
 
+
+randNum: function(){
+    return Math.floor(Math.random() * (1100 - 10 + 1)) + 10;
+},
+
+start: function(){
+    $($container).append('<button class="diff" id="rookie">Rookie</button>');
+    $($container).append('<button class="diff" id="pro">Pro</button>');
+    $($container).append('<button class="diff" id="allstar">All-Star</button>');
+    $('.diff').on('click', game.diffLevel);
+// make difficulty not string .. number
  }, // end start
 
+
+
+ diffLevel: function(){
+   $('.diff').hide();
+   game.difficulty = $(this).text();
+   $($startButton).hide();
+   $($powermeter).text("").animate({ left: "10%", bottom: "18%" }, 'slow').animate({
+     height: 36, width: 160}, 'fast');
+   $($powermeter).append('<div id="innerbox"> Shoot !</div>');
+   $($playerOneScore).text("Player One Score: " + game.scoreCount);
+   $($playerTwoScore).text("Player Two Score: " + game.scoreCount);
+   $($ball).append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
+   $($timerId).text("Shot Clock: " + seconds);
+   $($turnBox).text("Player One, You're Up! Click the Ball to start shooting!");
+   if (game.whosTurn === '') {
+     game.whosTurn = game.playerOne;
+   } else if (game.whosTurn === game.playerOne) {
+     game.whosTurn = game.playerTwo;
+   };
+ },
 
  updateScore: function(){
    if (seconds !== 0) {
@@ -57,118 +79,173 @@ var game = {
   };
  },
 
- addEventToBall: function(){
-   var startTime;
-   function begin(){
-     startTime = new Date();
-    game.shotsTaken++
-     $($powermeter).animate({
-       backgroundColor: "#b2000"
-     }, 100 ).animate({
-       backgroundColor: "#00cc00"
-     }, 1900).animate({
-       backgroundColor: "#b2000"
-     }, 100);
 
-      $('img[src="' + newSrc + '"]').attr('src', oldSrc); // stack overflow
-      if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
-      $('img[src="' + oldSrc + '"]').attr('src', newSrc); // stack overflow
+makeShot: function(){
+  if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
+  $('img[src="' + oldSrc + '"]').attr('src', newSrc);
+  game.scoreCount+=2;
+  $($makeormiss).text("You're On Fire!");
+} else {
+  $($makeormiss).text("SWISH!");
+  game.scoreCount++
+  console.log(game.scoreCount);
+};
+  game.updateScore();
+},
+
+missShotLong: function() {
+ $($makeormiss).text("Late Release!");
+},
+
+missShotShort: function(){
+  $($makeormiss).text("Early Release!");
+},
+
+animateMake: function(){
+  $($ball).animate({ left: "45%", top: "10%" }, 'slow').animate({
+                     left: "53%", top: "37%", opacity: 0 }, 500 ).animate({
+                     left: game.randNum(), top: "80%" }, 'fast').animate({ opacity: 1, }, 'fast');
+},
+
+animateMissShort: function(){
+  $($ball).animate({ left: "70%", top: "30%", opacity: 0 }, 'slow').animate({
+                     left: game.randNum(), top: "80%", opacity: 1 }, 'fast');
+},
+
+animateMissLong: function(){
+  $($ball).animate({ left: "35%", top: "10%", opacity: 0 }, 'fast').animate({
+                     left: game.randNum(), top: "80%", opacity: 1 }, 'fast');
+},
+
+animatePowerMeter: function(){
+    switch (game.difficulty) {
+      case "Rookie":
+        $('#innerbox').animate({ width: "100%", backgroundColor: "#00cc00"}, 1700).animate({
+                                 backgroundColor: "#b3000"}, 200);
+        break;
+      case "Pro":
+        $('#innerbox').animate({ width: "100%", backgroundColor: "#00cc00"}, 1500).animate({
+                                 backgroundColor: "#b9000"}, 200);
+        break;
+      case "All-Star":
+        $('#innerbox').animate({ width: "100%", backgroundColor: "#00cc00"}, 1500).animate({
+                                 backgroundColor: "#c2000"}, 200);
+        break;
+      default:
+        $('#innerbox').animate({ width: "100%", backgroundColor: "#00cc00"}, 1700).animate({
+                               backgroundColor: "#b3000"}, 200);
     };
-   };
+},
 
-   function end(){
-     $($powermeter).animate({
-       backgroundColor: "#b2000"
-     }, 100);
-     var now = new Date();
-     //console.log(now-startTime);
-     var downTime = (now -startTime);
-     if (downTime > 1000 && downTime < 2000){
-       if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
-       $('img[src="' + oldSrc + '"]').attr('src', newSrc);
-       game.scoreCount++
-       $($makeormiss).text("KOBE!");
-     }
-       $($makeormiss).text("SWISH!");
-       game.scoreCount++
-       console.log(game.scoreCount);
-       $($ball).animate({
-         left: "45%",
-         top: "10%"
-       }, 'slow').animate({
-         left: "53%",
-         top: "37%",
-         opacity: 0
-       }, 500 ).animate({
-         left: "30%",
-         top: "80%"
-       }, 'fast').animate({
-         opacity: 1,
-       }, 'fast');
-      // game.playerOne = game.scoreCount;
-       game.updateScore();
-     } else if (downTime < 1000){
-       $($ball).animate({
-         left: "70%",
-         top: "30%",
-         opacity: 0
-       }, 'slow').animate({
-         left: "30%",
-         top: "80%",
-         opacity: 1
-       }, 'fast');
-       $($makeormiss).text("BRICK!");
-     } else if (downTime > 2000) {
-       $($ball).animate({
-         left: "35%",
-         top: "10%",
-         opacity: 0
-      }, 'fast').animate({
-        left: "30%",
-        top: "80%",
-        opacity: 1
-      }, 'fast');
-      $($makeormiss).text("AIRBALL!");
-     };
-   };
-   $($ball).mousedown(begin);
-   $($ball).mouseup(end) //see above notes
- },
+animateWinner: function(){
+  $('#winner').animate({ top: "20%" }, 4000);
+},
+
+
+
+
+ addEventToBall: function(){
+       var startTime;
+       function begin(){
+          startTime = new Date();
+          game.shotsTaken++
+          game.animatePowerMeter();
+          $('img[src="' + newSrc + '"]').attr('src', oldSrc); // stack overflow
+          if (game.shotsTaken !== 0 && game.shotsTaken%5 === 0){
+            $('img[src="' + oldSrc + '"]').attr('src', newSrc); // stack overflow
+          };
+       }; // end begin function
+
+       function end(){
+
+         $('#innerbox').stop();
+         $('#innerbox').animate({
+           width: "0%",
+           backgroundColor: "ffffff"
+         }, 100);
+
+          var now = new Date();
+          var downTime = (now -startTime);
+          game.randNum();
+          switch (game.difficulty) { // make switch case
+                case 'Rookie':
+                  if (downTime > 1000 && downTime < 2000){
+                     game.makeShot();
+                     game.animateMake();
+                   } else if (downTime < 1000){
+                     game.missShotShort();
+                     game.animateMissShort();
+                   } else if (downTime > 2000) {
+                     game.missShotLong();
+                     game.animateMissLong();
+                   };
+                   break;
+               case 'Pro':
+                  if (downTime > 1200 && downTime < 1800){
+                     game.makeShot();
+                     game.animateMake();
+                   } else if (downTime < 1200){
+                     game.missShotShort();
+                     game.animateMissShort();
+                   } else if (downTime > 1800) {
+                     game.missShotLong();
+                     game.animateMissLong();
+                   };
+                   break;
+               case 'All-Star':
+                  if (downTime > 1400 && downTime < 1600){
+                     game.makeShot();
+                     game.animateMake();
+                   } else if (downTime < 1400){
+                     game.missShotShort();
+                     game.animateMissShort();
+                   } else if (downTime > 1600) {
+                     game.missShotLong();
+                     game.animateMissLong();
+                   };
+                  break;
+          }; //end switch difficulty
+         }; // end end function
+    $($ball).mousedown(begin);
+    $($ball).mouseup(end) //see above notes
+ }, // end addEventToBall function
 
  endTurn: function(){
-   $($timerId).animate({
-     color: '#ffffff'
-   }, 500);
-   $($ball).off();
-   $($turnBox).text("Nice Shooting! You got " + game.scoreCount + " points");
-   if (game.whosTurn === game.playerTwo) {
-     if(game.firstScore > game.secondScore){
-       $('#winner').text(game.playerOne + " You Won!")
-       $($container).append('<button id="playagain">Play Again</button>');
-       $('#playagain').on('click', function(){
-         location.reload();
-       });
-       return;
-     } else if (game.firstScore < game.secondScore) {
-       $('#winner').text(game.playerTwo + " You Won!");
-       $($container).append('<button id="playagain">Play Again</button>');
-       $('#playagain').on('click', function(){
-         location.reload();
-       });
-       return;
-     } else if (game.firstScore === game.secondScore) {
-       $('#winner').text("It was a tie!");
-       $($container).append('<button id="playagain">Play Again</button>');
-       $('#playagain').on('click', function(){
-         location.reload();
-       });
-       return;
-     };
-   } else {
-     $($container).append('<button id="next">Next</button>');
-     $('#next').on('click', game.startNextRound);
-   };
- },
+       $($timerId).animate({ color: '#ffffff' }, 500);
+       $($ball).off();
+       $($turnBox).text("Nice Shooting! You got " + game.scoreCount + " points");
+       if (game.whosTurn === game.playerTwo) {
+         if(game.firstScore > game.secondScore){
+           $('#winner').text(game.playerOne + " You Won!")
+           game.animateWinner();
+           $($container).append('<button id="playagain">Play Again</button>');
+           $('#playagain').on('click', function(){
+             location.reload();
+           });
+           return;
+         } else if (game.firstScore < game.secondScore) {
+           $('#winner').text(game.playerTwo + " You Won!");
+           game.animateWinner();
+           $($container).append('<button id="playagain">Play Again</button>');
+           $('#playagain').on('click', function(){
+             location.reload();
+           });
+           return;
+         } else if (game.firstScore === game.secondScore) {
+           $('#winner').text("It was a tie!");
+           game.animateWinner();
+           $($container).append('<button id="playagain">Play Again</button>');
+           $('#playagain').on('click', function(){
+             location.reload();
+           });
+           return;
+         };
+       } else {
+         $($container).append('<button id="next">Next</button>');
+         $('#next').on('click', game.startNextRound);
+       };
+
+ }, // end endTurn function
 
  startNextRound: function(){
    $('#next').hide();
@@ -191,19 +268,18 @@ var game = {
    $($ball).off('click');
    $($turnBox).text('');
    var mytimer = setInterval(updateTime, 1000);
+
    function updateTime(){
-     seconds--;
-     $($timerId).text("Shot Clock: " + seconds);
-     if(seconds < 11){
-       $($timerId).animate({
-         color: "#b3000",
-       }, 200);
-       $($timerId).fadeOut(500);
-       $($timerId).fadeIn(500);
-     }; if(seconds === 0) {
-       clearInterval(mytimer);
-       game.endTurn();
-     }; // end if clearInterval
+       seconds--;
+       $($timerId).text("Shot Clock: " + seconds);
+       if(seconds < 11){
+         $($timerId).animate({ color: "#b3000", }, 200);
+         $($timerId).fadeOut(500);
+         $($timerId).fadeIn(500);
+       }; if(seconds === 0) {
+         clearInterval(mytimer);
+         game.endTurn();
+       }; // end if clearInterval
    }; // end updateTime
    game.addEventToBall();
  },

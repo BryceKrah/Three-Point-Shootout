@@ -5,6 +5,7 @@
 }
 
 body{
+  -webkit-touch-callout: none !important;
   background-color: lightgray;
   font-family: 'Exo', sans-serif;
 }
@@ -33,9 +34,31 @@ body{
 #winner {
   font-size: 60px;
   font-weight: bold;
-  color: red;
+  color: yellow;
   position: absolute;
   left: 29%;
+  top: 0%;
+}
+
+#rookie{
+  font-size: 30px;
+  border-radius: 30px;
+  padding: 10px;
+  color: blue;
+}
+#pro{
+  font-size: 30px;
+  border-radius: 30px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  color: blue;
+}
+#allstar{
+  font-size: 30px;
+  border-radius: 30px;
+  padding: 10px;
+  color: blue;
 }
 
 #next {
@@ -74,6 +97,7 @@ body{
 }
 
 #ball{
+  -webkit-user-select: none !important;
   display: inline-block;
   position: absolute;
   top: 80%;
@@ -102,13 +126,34 @@ body{
 }
 
 #powermeter{
-  font-size: 30px;
-  border-radius: 20px;
+  font-size: 23px;
+  font-weight: bold;
+  border-radius: 10px;
   border: 2px solid white;
   display: inline-block;
   position: absolute;
+  height: 0px;
+  width: 0px;
   bottom: 0%;
   left: 0%;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+  background-color: red;
+}
+
+#innerbox{
+  height: 100%;
+  overflow: auto;
+  margin: 0px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  width: 0px;
+  background-position: right;
+  color: white;
+  text-align: left;
+
 }
 
 
