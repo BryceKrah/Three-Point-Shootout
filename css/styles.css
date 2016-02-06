@@ -5,7 +5,10 @@
 }
 
 body{
+<<<<<<< HEAD
+=======
   -webkit-touch-callout: none !important;
+>>>>>>> 0bdfee67ad99ad044aba0cb173d64851ab394e21
   background-color: lightgray;
   font-family: 'Exo', sans-serif;
 }
@@ -34,6 +37,11 @@ body{
 #winner {
   font-size: 60px;
   font-weight: bold;
+<<<<<<< HEAD
+  color: red;
+  position: absolute;
+  left: 29%;
+=======
   color: yellow;
   position: absolute;
   left: 29%;
@@ -59,6 +67,7 @@ body{
   border-radius: 30px;
   padding: 10px;
   color: blue;
+>>>>>>> 0bdfee67ad99ad044aba0cb173d64851ab394e21
 }
 
 #next {
@@ -97,7 +106,10 @@ body{
 }
 
 #ball{
+<<<<<<< HEAD
+=======
   -webkit-user-select: none !important;
+>>>>>>> 0bdfee67ad99ad044aba0cb173d64851ab394e21
   display: inline-block;
   position: absolute;
   top: 80%;
@@ -126,6 +138,15 @@ body{
 }
 
 #powermeter{
+<<<<<<< HEAD
+  font-size: 30px;
+  border-radius: 20px;
+  border: 2px solid white;
+  display: inline-block;
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+=======
   font-size: 23px;
   font-weight: bold;
   border-radius: 10px;
@@ -154,6 +175,7 @@ body{
   color: white;
   text-align: left;
 
+>>>>>>> 0bdfee67ad99ad044aba0cb173d64851ab394e21
 }
 
 
