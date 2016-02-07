@@ -38,6 +38,7 @@ randNum: function(){
 start: function(){
     $('p').hide();
     $($startButton).hide();
+    $($bigbox).animate({ left: "20%", width: "60%", height: "8%"}, 700);
     $($bigbox).append('<button class="diff" id="rookie">Rookie</button>');
     $($bigbox).append('<button class="diff" id="pro">Pro</button>');
     $($bigbox).append('<button class="diff" id="allstar">All-Star</button>');
@@ -49,6 +50,7 @@ start: function(){
 
 
 showDirections: function(){
+  $($bigbox).animate({ height: "48%"}, 500);
   $('p').show();
   $('.diff').hide();
   $('#manual').hide();
