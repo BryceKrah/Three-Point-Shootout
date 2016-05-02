@@ -65,7 +65,7 @@ body{
   top: 0%;
 }
 
-#rookie{
+#rookie, .playerName{
   font-size: 30px;
   border-radius: 30px;
   padding: 10px;
