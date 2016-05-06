@@ -11,6 +11,8 @@ var oldSrc = 'http://icons.iconseeker.com/png/fullsize/nx10/basketball.png';
 var newSrc = 'http://www.primetimeshootout.net/images/ball.png';
 var $makeormiss = $('#makeormiss');
 var $bigbox = $('.bigbox');
+let p1Name;
+let p2Name;
 
 // http://stackoverflow.com/questions/1038677/how-can-i-measure-the-time-between-click-and-release-in-javascript
 // the begin function starts counting when the mouse is clicked logging its time down in miliseconds
@@ -41,13 +43,28 @@ start: function(){
 
     $('p').hide();
     $startButton.hide();
-    $bigbox.animate({ left: "20%", width: "60%", height: "8%"}, 700);
-    $bigbox.append('<button class="diff" id="rookie">Rookie</button>');
-    $bigbox.append('<button class="diff" id="pro">Pro</button>');
-    $bigbox.append('<button class="diff" id="allstar">All-Star</button>');
-    $bigbox.append('<button id="manual">How To Play</button>')
-    $('.diff').on('click', game.diffLevel);
-    $('#manual').on('click', game.showDirections);
+    $bigbox.animate({ left: "20%", width: "65%", height: "8%"}, 700);
+    $bigbox.append('<input placeholder="Player 1 Name" class="playerName" id="p1"/>');
+    $bigbox.append('<input placeholder="Player 2 Name" class="playerName" id="p2"/>');
+    $('.playerName').keydown((event) => {
+      let key = event.keyCode;
+      if (key == 13) {
+        if ($('#p1').val() == '' || $('#p2').val() == '') {
+          $('.error').remove();
+          $bigbox.append('<h2 class="error" >Please Enter Valid Name </h2>');
+        } else {
+          p1Name = $('#p1').val();
+          p2Name = $('#p2').val();
+          $bigbox.empty();
+          $bigbox.append('<button class="diff" id="rookie">Rookie</button>');
+          $bigbox.append('<button class="diff" id="pro">Pro</button>');
+          $bigbox.append('<button class="diff" id="allstar">All-Star</button>');
+          $bigbox.append('<button id="manual">How To Play</button>')
+          $('.diff').on('click', game.diffLevel);
+          $('#manual').on('click', game.showDirections);
+        }
+      }
+    })
 // make difficulty not string .. number
  }, // end start
 
@@ -69,25 +86,25 @@ showDirections: function(){
    $powermeter.text("").animate({ left: "10%", bottom: "18%" }, 'slow').animate({
      height: 36, width: 160}, 'fast');
    $powermeter.append('<div id="innerbox"> Shoot !</div>');
-   $playerOneScore.text("Player One Score: " + game.scoreCount);
-   $playerTwoScore.text("Player Two Score: " + game.scoreCount);
+   $playerOneScore.text( p1Name + "'s Score: " + game.scoreCount);
+   $playerTwoScore.text( p2Name + "'s Score: " + game.scoreCount);
    $ball.append('<img class="basketball" src="http://icons.iconseeker.com/png/fullsize/nx10/basketball.png">');
    $timerId.text("Shot Clock: " + seconds);
-   $turnBox.text("Player One, You're Up! Click the Ball to start shooting!");
+   $turnBox.text( p1Name + ", You're Up! Click the Ball to start shooting!");
    if (game.whosTurn === '') {
-     game.whosTurn = game.playerOne;
-   } else if (game.whosTurn === game.playerOne) {
-     game.whosTurn = game.playerTwo;
+     game.whosTurn = p1Name;
+   } else if (game.whosTurn === p1Name) {
+     game.whosTurn = p2Name;
    };
  },
 
  updateScore: function(){
    if (seconds !== 0) {
-     if(game.whosTurn === game.playerOne){
-       $playerOneScore.text("Player One Score: " + game.scoreCount);
+     if(game.whosTurn === p1Name){
+       $playerOneScore.text( p1Name + " Score: " + game.scoreCount);
        game.firstScore = game.scoreCount;
-     } else if (game.whosTurn === game.playerTwo){
-       $playerTwoScore.text("Player Two Score: " + game.scoreCount);
+     } else if (game.whosTurn === p2Name){
+       $playerTwoScore.text( p2Name + " Score: " + game.scoreCount);
        game.secondScore = game.scoreCount;
      }
   };
@@ -228,9 +245,9 @@ animateWinner: function(){
        $timerId.animate({ color: '#ffffff' }, 500);
        $ball.off();
        $turnBox.text("Nice Shooting! You got " + game.scoreCount + " points");
-       if (game.whosTurn === game.playerTwo) {
+       if (game.whosTurn === p2Name) {
          if(game.firstScore > game.secondScore){
-           $('#winner').text(game.playerOne + " You Won!")
+           $('#winner').text(p1Name + " You Won!")
            game.animateWinner();
            $($container).append('<button id="playagain">Play Again</button>');
            $('#playagain').on('click', function(){
@@ -238,7 +255,7 @@ animateWinner: function(){
            });
            return;
          } else if (game.firstScore < game.secondScore) {
-           $('#winner').text(game.playerTwo + " You Won!");
+           $('#winner').text(p2Name + " You Won!");
            game.animateWinner();
            $($container).append('<button id="playagain">Play Again</button>');
            $('#playagain').on('click', function(){
@@ -267,11 +284,11 @@ animateWinner: function(){
    game.shotsTaken = 0;
    game.scoreCount = 0;
    $($timerId).text("Shot Clock: " + seconds);
-   $($turnBox).text("Player Two, You're Up! Click the Ball to start shooting!");
+   $($turnBox).text(p2Name + ", You're Up! Click the Ball to start shooting!");
    if (game.whosTurn === '') {
-     game.whosTurn = game.playerOne;
-   } else if (game.whosTurn === game.playerOne) {
-     game.whosTurn = game.playerTwo;
+     game.whosTurn = p1Name;
+   } else if (game.whosTurn === p1Name) {
+     game.whosTurn = p2Name;
    };
    $($ball).on('click', game.startTheTimer);
  },
